@@ -7,7 +7,6 @@ htmlcov/
 .venv/
 venv/
 node_modules/
-assets/screenshots/*.png
 reports/*.csv
 reports/*.json
 !reports/sample_fault_study.csv

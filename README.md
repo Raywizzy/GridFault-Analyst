@@ -19,6 +19,16 @@ testable code, and clean product presentation without requiring lab equipment.
 - CSV report export utility
 - Python unit tests and GitHub Actions CI
 
+## Screenshots
+
+Dashboard:
+
+![GridFault Analyst dashboard](assets/screenshots/dashboard.png)
+
+Time-current coordination graph:
+
+![Time-current coordination graph](assets/screenshots/time-current-coordination.png)
+
 ## Quick Start
 
 Open the dashboard directly:
