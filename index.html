@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GridFault Analyst</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">G</div>
+        <div>
+          <strong>GridFault</strong>
+          <span>Analyst</span>
+        </div>
+      </div>
+      <nav aria-label="Primary">
+        <a class="active" href="#study">Study Setup</a>
+        <a href="#diagram">Fault Analysis</a>
+        <a href="#coordination">Coordination</a>
+        <a href="#reports">Reports</a>
+      </nav>
+      <div class="profile">
+        <span>Project</span>
+        <strong>University Feeder Study</strong>
+        <small>Last saved 2026-05-24</small>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <h1>Distribution Fault Study</h1>
+          <p>11 kV radial feeder protection simulator</p>
+        </div>
+        <label class="feeder-select">
+          <span>Feeder</span>
+          <select id="feeder">
+            <option>11 kV Radial Feeder</option>
+            <option>Campus Ring Main</option>
+            <option>Industrial Spur</option>
+          </select>
+        </label>
+        <div class="status-pill">
+          <span class="dot"></span>
+          Calculated
+        </div>
+      </header>
+
+      <section class="workspace">
+        <form class="panel inputs" id="study" aria-label="Fault study inputs">
+          <div class="panel-title">
+            <h2>Study Inputs</h2>
+            <button type="button" id="resetBtn" title="Reset inputs">Reset</button>
+          </div>
+
+          <fieldset>
+            <legend>Source & Transformer</legend>
+            <label>
+              Source Voltage L-L
+              <span class="field-row">
+                <input id="voltage" type="number" min="1" step="0.1" value="11" />
+                <span>kV</span>
+              </span>
+            </label>
+            <label>
+              Transformer Rating
+              <span class="field-row">
+                <input id="mva" type="number" min="0.5" step="0.5" value="10" />
+                <span>MVA</span>
+              </span>
+            </label>
+            <label>
+              Transformer Impedance
+              <span class="field-row">
+                <input id="zPercent" type="number" min="0.1" step="0.05" value="5.75" />
+                <span>%</span>
+              </span>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Feeder</legend>
+            <label>
+              Feeder Length
+              <span class="field-row">
+                <input id="length" type="number" min="0.1" step="0.1" value="4.2" />
+                <span>km</span>
+              </span>
+            </label>
+            <div class="two-col">
+              <label>
+                R1
+                <span class="field-row">
+                  <input id="r1" type="number" min="0.001" step="0.001" value="0.306" />
+                  <span>ohm/km</span>
+                </span>
+              </label>
+              <label>
+                X1
+                <span class="field-row">
+                  <input id="x1" type="number" min="0.001" step="0.001" value="0.386" />
+                  <span>ohm/km</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Fault</legend>
+            <label>
+              Fault Type
+              <select id="faultType">
+                <option value="single_line_ground">Single line-to-ground</option>
+                <option value="line_to_line">Line-to-line</option>
+                <option value="three_phase">Three phase</option>
+              </select>
+            </label>
+            <label>
+              Fault Location
+              <span class="slider-value"><output id="locationKm">2.60 km</output></span>
+              <input id="location" type="range" min="0" max="100" value="62" />
+            </label>
+            <label>
+              Relay Pickup
+              <span class="field-row">
+                <input id="relayPickup" type="number" min="100" step="25" value="800" />
+                <span>A</span>
+              </span>
+            </label>
+          </fieldset>
+        </form>
+
+        <section class="panel diagram-panel" id="diagram">
+          <div class="panel-title">
+            <h2>Single-Line Diagram</h2>
+            <label class="toggle">
+              <input id="labelsToggle" type="checkbox" checked />
+              <span>Labels</span>
+            </label>
+          </div>
+          <div class="diagram-wrap">
+            <svg id="singleLine" viewBox="0 0 900 360" role="img" aria-labelledby="diagramTitle">
+              <title id="diagramTitle">Single-line feeder diagram with fault marker</title>
+              <line class="bus" x1="120" y1="170" x2="790" y2="170" />
+              <circle class="source" cx="95" cy="170" r="34" />
+              <path class="wave" d="M76 170c8-22 30-22 38 0s30 22 38 0" />
+              <line class="breaker" x1="185" y1="136" x2="185" y2="204" />
+              <line class="breaker-x" x1="170" y1="155" x2="200" y2="185" />
+              <line class="breaker-x" x1="200" y1="155" x2="170" y2="185" />
+              <circle class="transformer" cx="270" cy="170" r="34" />
+              <circle class="transformer" cx="312" cy="170" r="34" />
+              <line class="breaker" x1="415" y1="136" x2="415" y2="204" />
+              <line class="breaker-x" x1="400" y1="155" x2="430" y2="185" />
+              <line class="breaker-x" x1="430" y1="155" x2="400" y2="185" />
+              <rect class="fuse" x="500" y="153" width="52" height="34" />
+              <rect class="fuse" x="710" y="153" width="52" height="34" />
+              <polygon class="arrow" points="800,170 772,154 772,186" />
+              <g id="faultGroup">
+                <line class="fault-stem" x1="640" y1="118" x2="640" y2="170" />
+                <path class="fault-bolt" d="M650 82h-25l-12 51h23l-12 48 45-70h-28z" />
+                <circle class="fault-dot" cx="640" cy="170" r="6" />
+              </g>
+              <g class="diagram-labels">
+                <text x="42" y="240">Utility Source</text>
+                <text x="168" y="122">CB-1</text>
+                <text x="247" y="119">10 MVA</text>
+                <text x="392" y="122">CB-2</text>
+                <text x="500" y="220">Fuse-1</text>
+                <text x="710" y="220">Fuse-2</text>
+                <text x="765" y="238">Load</text>
+                <text id="faultLabel" x="602" y="65">Fault 2.60 km</text>
+              </g>
+            </svg>
+          </div>
+        </section>
+
+        <section class="panel results" id="reports">
+          <div class="panel-title">
+            <h2>Calculated Results</h2>
+            <span id="severityBadge">Elevated</span>
+          </div>
+          <div class="metric-grid">
+            <article>
+              <span>Fault Current</span>
+              <strong id="faultCurrent">3.39 kA</strong>
+              <small>RMS symmetrical</small>
+            </article>
+            <article>
+              <span>Per-Unit Voltage</span>
+              <strong id="puVoltage">0.899 pu</strong>
+              <small>At fault point</small>
+            </article>
+            <article>
+              <span>Fault MVA</span>
+              <strong id="faultMva">64.65 MVA</strong>
+              <small>Calculated duty</small>
+            </article>
+            <article>
+              <span>X/R Ratio</span>
+              <strong id="xrRatio">1.26</strong>
+              <small>To fault point</small>
+            </article>
+          </div>
+          <div class="recommendation">
+            <span class="check">✓</span>
+            <div>
+              <strong id="primaryDevice">Operate Fuse-1</strong>
+              <small id="tripSummary">Primary clearing in 1.36 s</small>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Device</th>
+                <th>Trip Time</th>
+              </tr>
+            </thead>
+            <tbody id="deviceRows"></tbody>
+          </table>
+        </section>
+
+        <section class="panel chart-panel" id="coordination">
+          <div class="panel-title">
+            <h2>Time-Current Coordination</h2>
+            <div class="segmented">
+              <button class="active" type="button">Log</button>
+              <button type="button">Lin</button>
+            </div>
+          </div>
+          <canvas id="curveChart" width="940" height="310"></canvas>
+        </section>
+
+        <section class="panel details">
+          <div class="panel-title">
+            <h2>Study Notes</h2>
+          </div>
+          <p>
+            Calculations use a transparent per-unit approximation for study
+            comparison. Real protection settings must be validated against
+            utility standards, manufacturer curves, arc-flash requirements, and
+            field measurements.
+          </p>
+          <dl>
+            <div>
+              <dt>Base Current</dt>
+              <dd id="baseCurrent">524.86 A</dd>
+            </div>
+            <div>
+              <dt>Total Impedance</dt>
+              <dd id="totalPu">0.101 pu</dd>
+            </div>
+            <div>
+              <dt>Backup Device</dt>
+              <dd id="backupDevice">CB-2 Relay</dd>
+            </div>
+          </dl>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

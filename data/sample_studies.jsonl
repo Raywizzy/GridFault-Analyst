@@ -1,0 +1,2 @@
+{"study_id":"radial-11kv-slg-001","source_voltage_kv":11.0,"transformer_mva":10.0,"transformer_impedance_percent":5.75,"feeder_length_km":4.2,"conductor_r_ohm_per_km":0.306,"conductor_x_ohm_per_km":0.386,"fault_location_percent":62.0,"fault_type":"single_line_ground"}
+{"study_id":"radial-11kv-3ph-002","source_voltage_kv":11.0,"transformer_mva":10.0,"transformer_impedance_percent":5.75,"feeder_length_km":4.2,"conductor_r_ohm_per_km":0.306,"conductor_x_ohm_per_km":0.386,"fault_location_percent":35.0,"fault_type":"three_phase"}

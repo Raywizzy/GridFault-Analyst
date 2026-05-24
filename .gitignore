@@ -1,0 +1,13 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+node_modules/
+assets/screenshots/*.png
+reports/*.csv
+reports/*.json
+!reports/sample_fault_study.csv

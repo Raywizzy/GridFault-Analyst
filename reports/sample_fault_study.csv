@@ -1,0 +1,2 @@
+source_voltage_kv,transformer_mva,transformer_impedance_percent,feeder_length_km,fault_location_percent,fault_type,fault_current_a,fault_mva,per_unit_voltage_at_fault,severity,primary_device,primary_trip_time_s,backup_device,backup_trip_time_s
+11.0,10.0,5.75,4.2,62.0,single_line_ground,2086.54,39.75,0.648,elevated,Fuse-1,4.495,CB-2 Relay,5.786
